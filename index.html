@@ -1,82 +1,82 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Révision Japonais - Flashcards</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #1E1E1E;
-            color: white;
-        }
-        .flashcard-container {
-            perspective: 1000px;
-            width: 80%;
-            max-width: 500px;
-            margin: 50px auto;
-        }
-        .flashcard {
-            width: 100%;
-            height: 200px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: transform 0.3s, opacity 0.5s ease-in-out;
-            transform-style: preserve-3d;
-            position: relative;
-            opacity: 0;
-        }
-        .flashcard.show {
-            opacity: 1;
-        }
-        .flipped {
-            transform: rotateY(180deg);
-        }
-        .flashcard .front, .flashcard .back {
-            color: white;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            backface-visibility: hidden;
-            font-size: 1.5em;
-        }
-        .flashcard .back {
-            transform: rotateY(180deg);
-            font-size: 1.5em;
-        }
-        .flashcard .back p {
-            margin: 2px 0;
-        }
-        .progress {
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Révision Japonais - Flashcards</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #1E1E1E;
+      color: white;
+    }
+    .flashcard-container {
+      perspective: 1000px;
+      width: 80%;
+      max-width: 500px;
+      margin: 50px auto;
+    }
+    .flashcard {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s, opacity 0.5s ease-in-out;
+      transform-style: preserve-3d;
+      position: relative;
+      opacity: 0;
+    }
+    .flashcard.show {
+      opacity: 1;
+    }
+    .flipped {
+      transform: rotateY(180deg);
+    }
+    .flashcard .front,
+    .flashcard .back {
+      color: white;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      font-size: 1.5em;
+    }
+    .flashcard .back {
+      transform: rotateY(180deg);
+      font-size: 1.5em;
+    }
+    .back p {
+      margin: 2px 0;
+    }
+    .progress {
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Révision Japonais - Flashcards</h1>
-    <div class="progress"><span id="progress"></span></div>
-    <div class="flashcard-container" onclick="toggleCard()">
-        <div class="flashcard">
-            <div class="front">
-                <p id="word-fr">Clique pour voir la réponse</p>
-            </div>
-            <div class="back">
-                <p id="word-romaji"></p>
-                <p id="word-hiragana"></p>
-                <p id="word-kanji"></p>
-            </div>
-        </div>
+  <h1>Révision Japonais - Flashcards</h1>
+  <div class="progress"><span id="progress"></span></div>
+  <div class="flashcard-container" onclick="toggleCard()">
+    <div class="flashcard">
+      <div class="front">
+        <p id="word-fr">Clique pour voir la réponse</p>
+      </div>
+      <div class="back">
+        <p id="word-romaji"></p>
+        <p id="word-hiragana"></p>
+      </div>
     </div>
-    
-    <script>
-        const words = [
-{ fr: "Bateau", romaji: "fune", hiragana: "ふね", kanji: "船" },
+  </div>
+  
+  <script>
+    const words = [
+    { fr: "Bateau", romaji: "fune", hiragana: "ふね", kanji: "船" },
 { fr: "Bus", romaji: "basu", hiragana: "ばす", kanji: "バス" },
 { fr: "Vélo", romaji: "jitensha", hiragana: "じてんしゃ", kanji: "自転車" },
 { fr: "Train", romaji: "densha", hiragana: "でんしゃ", kanji: "電車" },
@@ -480,85 +480,79 @@
 { fr: "Boucherie", romaji: "nikuya", hiragana: "にくや", kanji: "肉屋" },
 { fr: "Boulangerie", romaji: "panya", hiragana: "ぱんや", kanji: "パン屋" },
 { fr: "Fleuriste", romaji: "hanaya", hiragana: "はなや", kanji: "花屋" },
-        ];
-        
-        let currentIndex = 0;
-        let flipped = false;
-        
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
+    ];
+    
+    let currentIndex = 0;
+    let flipped = false;
+    
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+    
+    function updateProgress() {
+      document.getElementById("progress").textContent = `Carte ${currentIndex + 1} / ${words.length}`;
+    }
+    
+    function displayWord(index) {
+      let word = words[index];
+      document.getElementById("word-fr").textContent = word.fr;
+      document.getElementById("word-romaji").textContent = word.romaji;
+      document.getElementById("word-hiragana").textContent = word.hiragana;
+      updateProgress();
+    }
+    
+    // Initialiser l'objet de synthèse vocale
+    const utterance = new SpeechSynthesisUtterance();
+    utterance.lang = 'ja-JP'; // Langue japonaise
+    
+    // Sélection de la voix japonaise
+    function setJapaneseVoice() {
+      const voices = window.speechSynthesis.getVoices();
+      for (let i = 0; i < voices.length; i++) {
+        if (voices[i].lang === 'ja-JP') {
+          utterance.voice = voices[i];
+          break;
         }
-        
-        function updateProgress() {
-            document.getElementById("progress").textContent = `Carte ${currentIndex + 1} / ${words.length}`;
-        }
-        
-        function displayWord(index) {
-            let word = words[index];
-            document.getElementById("word-fr").textContent = word.fr;
-            document.getElementById("word-romaji").textContent = word.romaji;
-            document.getElementById("word-hiragana").textContent = word.hiragana;
-            document.getElementById("word-kanji").textContent = word.kanji;
-            updateProgress();
-        }
-        
-        // Initialiser l'objet de synthèse vocale
-        const utterance = new SpeechSynthesisUtterance();
-        utterance.lang = 'ja-JP'; // Définir la langue sur le japonais
-
-        // Fonction pour sélectionner la voix japonaise
-        function setJapaneseVoice() {
-            const voices = window.speechSynthesis.getVoices();
-            for (let i = 0; i < voices.length; i++) {
-                if (voices[i].lang === 'ja-JP') {
-                    utterance.voice = voices[i];
-                    break;
-                }
-            }
-        }
-
-        // Charger les voix disponibles et définir la voix japonaise
-        window.speechSynthesis.onvoiceschanged = setJapaneseVoice;
-
-        // Fonction pour lire le texte en japonais
-        function speakJapanese(text) {
-            // Annuler toute synthèse en cours
-            window.speechSynthesis.cancel();
-            // Définir le texte à lire
-            utterance.text = text;
-            // Démarrer la synthèse vocale
-            window.speechSynthesis.speak(utterance);
-        }
-
-        // Fonction pour retourner la carte et lire le texte
-        function toggleCard() {
-            let card = document.querySelector(".flashcard");
-            card.classList.toggle("flipped");
-            flipped = !flipped;
-
-            if (flipped) {
-                // Lire uniquement le romaji lorsque la carte est retournée
-                const word = words[currentIndex];
-                const textToSpeak = word.romaji; // Utiliser uniquement le romaji
-                speakJapanese(textToSpeak);
-            } else {
-                setTimeout(() => {
-                    currentIndex = (currentIndex + 1) % words.length;
-                    displayWord(currentIndex);
-                    card.classList.remove("show");
-                    setTimeout(() => {
-                        card.classList.add("show");
-                    }, 100);
-                }, 300);
-            }
-        }
-
-        shuffleArray(words);
-        displayWord(currentIndex);
-        document.querySelector(".flashcard").classList.add("show");
-    </script>
+      }
+    }
+    
+    window.speechSynthesis.onvoiceschanged = setJapaneseVoice;
+    
+    // Fonction de lecture du texte en japonais (utilise le hiragana)
+    function speakJapanese(text) {
+      window.speechSynthesis.cancel();
+      utterance.text = text;
+      window.speechSynthesis.speak(utterance);
+    }
+    
+    // Fonction de gestion du retournement de la carte
+    function toggleCard() {
+      let card = document.querySelector(".flashcard");
+      card.classList.toggle("flipped");
+      flipped = !flipped;
+    
+      if (flipped) {
+        const word = words[currentIndex];
+        // Lire le texte en hiragana
+        speakJapanese(word.hiragana);
+      } else {
+        setTimeout(() => {
+          currentIndex = (currentIndex + 1) % words.length;
+          displayWord(currentIndex);
+          card.classList.remove("show");
+          setTimeout(() => {
+            card.classList.add("show");
+          }, 100);
+        }, 300);
+      }
+    }
+    
+    shuffleArray(words);
+    displayWord(currentIndex);
+    document.querySelector(".flashcard").classList.add("show");
+  </script>
 </body>
 </html>
